@@ -1,19 +1,15 @@
 use chrono::{Local, NaiveDateTime};
+use serde::{Deserialize, Serialize};
 
-use crate::thing::{IdOrUser, Thing};
-
-pub trait IsUser {}
-
-pub struct User {
-    pub id: Option<Thing>,
+#[derive(Serialize, Deserialize, Debug)]
+pub struct User<T> {
+    pub id: Option<T>,
     pub name: String,
     pub email: String,
     pub created_at: NaiveDateTime,
 }
 
-impl IdOrUser for User {}
-
-impl User {
+impl<T> User<T> {
     pub fn new(name: String, email: String) -> Self {
         let created_at = Local::now().naive_local();
         Self {

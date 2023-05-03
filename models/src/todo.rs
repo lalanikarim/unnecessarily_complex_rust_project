@@ -1,30 +1,22 @@
 use serde::{Deserialize, Serialize};
 
-use crate::thing::{IdOrUser, Thing};
-
 #[derive(Serialize, Deserialize, Debug)]
-pub enum TodoStatus<T>
-where
-    T: IdOrUser,
-{
+pub enum TodoStatus<U> {
     Open,
-    Assigned(T),
-    Completed(T),
-    Closed(T),
+    Assigned(U),
+    Completed(U),
+    Closed(U),
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Todo<T>
-where
-    T: IdOrUser,
-{
-    pub id: Option<Thing>,
+pub struct Todo<T, U> {
+    pub id: Option<T>,
     pub details: String,
-    pub status: TodoStatus<T>,
+    pub status: TodoStatus<U>,
     pub evidence: Option<String>,
 }
 
-impl<T: IdOrUser> Todo<T> {
+impl<T, U> Todo<T, U> {
     pub fn new(details: String) -> Self {
         Self {
             id: None,
